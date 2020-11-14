@@ -5,6 +5,7 @@ import com.udacity.jdnd.course3.critter.user.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +20,12 @@ public class PetService {
         if (ownerId != null) {
             Optional<Customer> customer = this.customerService.find(ownerId);
             if (customer.isPresent()) {
+                if (customer.get().getPets() == null || customer.get().getPets().size() == 0) {
+                    customer.get().setPets(new ArrayList<>());
+                    customer.get().getPets().add(pet);
+                } else if (!customer.get().getPets().contains(pet)) {
+                    customer.get().getPets().add(pet);
+                }
                 pet.setCustomer(customer.get());
             }
         }

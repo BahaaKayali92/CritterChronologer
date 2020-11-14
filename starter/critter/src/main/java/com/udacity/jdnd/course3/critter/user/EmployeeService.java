@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.time.DayOfWeek;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class EmployeeService {
@@ -20,7 +21,8 @@ public class EmployeeService {
         return this.employeeRepository.findById(id);
     }
 
-    public List<Employee> findEmployeesBySkill(EmployeeSkill employeeSkill, DayOfWeek dayOfWeek) {
-        return this.employeeRepository.findEmployeeBySkillsAndDaysAvailableEquals(employeeSkill, dayOfWeek);
+    public List<Employee> findEmployeesBySkills(Set<EmployeeSkill> employeeSkills, DayOfWeek dayOfWeek) {
+        return this.employeeRepository.findEmployeeBySkillsInAndDaysAvailableEquals(employeeSkills, dayOfWeek);
+
     }
 }

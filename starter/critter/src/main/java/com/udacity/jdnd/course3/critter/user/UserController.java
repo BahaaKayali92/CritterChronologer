@@ -60,6 +60,7 @@ public class UserController {
         Employee employee = new Employee();
         employee.setName(employeeDTO.getName());
         employee.setSkills(employeeDTO.getSkills());
+        employee.setDaysAvailable(employeeDTO.getDaysAvailable());
         Long id = employeeService.save(employee);
         employeeDTO.setId(id);
         return this.convertEmployeeToEmployeeDTO(employee);
@@ -85,7 +86,7 @@ public class UserController {
 
     @PostMapping("/employee/availability")
     public List<EmployeeDTO> findEmployeesForService(@RequestBody EmployeeRequestDTO employeeDTO) {
-        return this.employeeService.findEmployeesBySkill(employeeDTO.getSkills().stream().findFirst().get(), employeeDTO.getDate().getDayOfWeek()).stream().map(employee -> this.convertEmployeeToEmployeeDTO(employee)).collect(Collectors.toList());
+        return this.employeeService.findEmployeesBySkills(employeeDTO.getSkills(), employeeDTO.getDate().getDayOfWeek()).stream().map(employee -> this.convertEmployeeToEmployeeDTO(employee)).collect(Collectors.toList());
     }
 
     private EmployeeDTO convertEmployeeToEmployeeDTO(Employee employee) {
